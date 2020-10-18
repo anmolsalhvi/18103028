@@ -1,0 +1,68 @@
+package com.company;
+
+import java.util.Scanner;
+
+public class Main {
+
+    private static boolean makingTriangle(String[] crops, int row, int col) {
+        return (row + 1 < crops.length && crops[row].charAt(col) == crops[row + 1].charAt(col)) &&
+                (col + 1 < crops[0].length() && crops[row].charAt(col) == crops[row].charAt(col + 1));
+    }
+
+    private static char getPossibleChar(String[] crops, int row, int col) {
+        for (char ch = 'a'; ch <= 'z'; ch++) {
+            if (check(crops, ch, row, col)) return ch;
+        }
+        return 'z';
+    }
+
+    private static boolean check(String[] crops, char ch, int row, int col) {
+        if(crops.length==0) return true;
+        return ( row ==0 || ( ch!=crops[row-1].charAt(col) ) ) && ( row==crops.length-1 || ch!=crops[row+1].charAt(col) ) && ( col==0 || ch!=crops[row].charAt(col-1) ) && ( col==crops[0].length()-1 || ch!=crops[row].charAt(col+1) );
+    }
+
+    private static boolean creatingProblem(String[] crops, int row, int col) {
+        return ( row>0 && crops[row].charAt(col) == crops[row-1].charAt(col) ) || (col>0 && crops[row].charAt(col) == crops[row].charAt(col-1));
+    }
+
+    public static void main(String[] args) {
+        int numRows;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter number of rows : ");
+        numRows = scanner.nextInt();
+        scanner.nextLine();
+        String[] crops = new String[numRows];
+        for (int i = 0; i < numRows; i++) {
+            int k=i+1;
+            System.out.println("Enter all the crops of " + k + " th row ");
+            crops[i] = scanner.nextLine().trim();
+        }
+        String[] crops1 = new String[numRows];
+
+        for(int i=0;i<numRows;i++) {
+            crops1[i]=crops[i];
+        }
+        
+        int count = 0;
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < crops[0].length(); j++) {
+                if (creatingProblem(crops, i, j)) {
+                    crops[i] = crops[i].substring(0, j) + getPossibleChar(crops, i, j) + crops[i].substring(j + 1);
+                    count++;
+                }
+            }
+        }
+        
+        int count1 = 0;
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < crops1[0].length(); j++) {
+                if (creatingProblem(crops1, i, j) || makingTriangle(crops1, i, j)) {
+                    crops1[i] = crops1[i].substring(0, j) + getPossibleChar(crops1, i, j) + crops1[i].substring(j + 1);
+                    count1++;
+                }
+            }
+        }
+        System.out.println(count < count1 ? count : count1);
+    }
+
+}
