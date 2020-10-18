@@ -1,0 +1,33 @@
+package com.company;
+
+import java.lang.*;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        int inputValue = scanner.nextInt();
+        System.out.println("Initital Value : " + inputValue);
+
+        byte convertedIntToByte = (byte)inputValue;
+        System.out.println("Byte Value : " + convertedIntToByte);
+
+        char convertedByteToChar = (char)convertedIntToByte;
+        System.out.println("Char Value : " + convertedByteToChar);
+
+        int convertedBackToInt = (int)convertedByteToChar;
+        System.out.println("Integer Value after a series of conversions : " + convertedBackToInt);
+
+        if(inputValue == convertedBackToInt) {
+            System.out.println("It lands back to it's initial value, as the input value fits into the range of a byte!");
+        }
+        else {
+            System.out.println("The initial value and the value after a series of modifications ( 32 bit integer to 8 bit byte to 16 bit char back to 32 bit integer ) are not the same!");
+            System.out.println("This is because the input value does not fit into the range of a byte, hence the value got modified in between steps!");
+        }
+
+    }
+}
